@@ -1,0 +1,128 @@
+service: cognito-user-manager-server
+
+provider:
+  name: aws
+  runtime: python3.7
+  region: us-east-1
+  iamRoleStatements:
+    - Effect: "Allow"
+      Action:
+        - "cognito-idp:ListUsers"
+        - "cognito-idp:ListGroups"
+        - "cognito-idp:ListUsersInGroup"
+        - "cognito-idp:AdminListGroupsForUser"
+        - "cognito-idp:AdminConfirmSignUp"
+        - "cognito-idp:AdminDisableUser"
+        - "cognito-idp:AdminDeleteUser"
+        - "cognito-idp:AdminEnableUser"
+        - "apigateway:POST"
+        - "apigateway:GET"
+      Resource: "arn:aws:cognito-idp:*"
+  
+  environment:
+        UserPoolId: USER_POOL_ID
+
+plugins:
+  - serverless-plugin-tracing
+  - serverless-prune-plugin
+  - serverless-plugin-split-stacks
+
+
+
+functions:
+  list-users:
+    handler: src/user_handler.list_users_lambda
+    memorySize: 128
+    timeout: 30
+    events:
+      - http:
+          path: api/list_users
+          method: get
+          cors: true
+          authorizer: 
+            name: authorizer
+            arn: COGNITO_IDP_ARN
+
+  list-users-in-group:
+    handler: src/user_handler.list_users_in_group_lambda
+    memorySize: 128
+    timeout: 30
+    events:
+      - http:
+          path: api/list_users_in_group
+          method: get
+          cors: true
+          authorizer: 
+            name: authorizer
+            arn: COGNITO_IDP_ARN
+          request:
+            template:
+              application/json: '{ "GroupName" : "$input.params(''GroupName'')"}'
+            parameters:
+              querystrings:
+                GroupName: true
+
+  list-groups:
+    handler: src/user_handler.list_groups_lambda
+    memorySize: 128
+    timeout: 30
+    events:
+      - http:
+          path: api/list_groups
+          method: get
+          cors: true
+          authorizer: 
+            name: authorizer
+            arn: COGNITO_IDP_ARN
+
+  approve-user:
+    handler: src/user_handler.approve_user_lambda
+    memorySize: 128
+    timeout: 30
+    events:
+      - http:
+          path: api/approve_user
+          method: post
+          cors: true
+          authorizer: 
+            name: authorizer
+            arn: COGNITO_IDP_ARN
+
+  enable-user:
+    handler: src/user_handler.enable_user_lambda
+    memorySize: 128
+    timeout: 30
+    events:
+      - http:
+          path: api/enable_user
+          method: post
+          cors: true
+          authorizer: 
+            name: authorizer
+            arn: COGNITO_IDP_ARN
+
+  disable-user:
+    handler: src/user_handler.disable_user_lambda
+    memorySize: 128
+    timeout: 30
+    events:
+      - http:
+          path: api/disable_user
+          method: post
+          cors: true
+          authorizer: 
+            name: authorizer
+            arn: COGNITO_IDP_ARN
+
+  delete-user:
+    handler: src/user_handler.delete_user_lambda
+    memorySize: 128
+    timeout: 30
+    events:
+      - http:
+          path: api/delete_user
+          method: post
+          cors: true
+          authorizer: 
+            name: authorizer
+            arn: COGNITO_IDP_ARN
