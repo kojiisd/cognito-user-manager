@@ -1,0 +1,58 @@
+<select class="selectpicker" [(ngModel)]="group" placeholder="Select Group">
+  <option value=""></option>
+  <option value="all">All</option>
+  <ng-container *ngFor="let group of groups">
+    <option [ngValue]="group.GroupName">{{group.GroupName}}</option>
+  </ng-container>
+</select>
+<button (click)="User()" class="btn btn-success mx-3 my-3">Get Cognito User Info</button>
+ 
+<div class="main" *ngIf="users">
+  <h2 class="list-title">User Information</h2>
+ 
+  <div class="table-responsive">
+    <table class="table table-sm table-bordered table-hover">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>ID</th>
+          <th>Email</th>
+          <th>Enable</th>
+          <th>Group</th>
+          <th>Confirm Status</th>
+          <th>Create Date(UTC)</th>
+          <th>Update Date(UTC)</th>
+          <th colspan="4">Operation</th>
+        </tr>
+      </thead>
+      <tbody>
+        <ng-container *ngFor="let user of users; index as i;">
+          <tr>
+            <td>{{i+1}}</td>
+            <td>{{user.Username}}</td>
+            <td>{{user.Attributes[2].Value}}</td>
+            <td>{{user.Enabled}}</td>
+            <td>{{user.GroupName}}</td>
+            <td>{{user.UserStatus}}</td>
+            <td>{{user.UserCreateDate | date:"yyyy/MM/dd HH:mm:ss" }}</td>
+            <td>{{user.UserLastModifiedDate | date:"yyyy/MM/dd HH:mm:ss" }}</td>
+            <td class="operation">
+              <div *ngIf="user.UserStatus === 'UNCONFIRMED'"><button (click)="Approve(user)" id="approve" class="btn btn-primary">承認</button></div>
+              <div *ngIf="user.UserStatus === 'CONFIRMED'"><button id="approve-disable" class="btn btn-primary" disabled>承認</button></div>
+            </td>
+            <td class="operation">
+              <div *ngIf="user.Enabled == true"><button (click)="Disable(user)" id="disabled" class="btn btn-secondary" >無効化</button></div>
+              <div *ngIf="user.Enabled == false"><button (click)="Enable(user)" id="enable" class="btn btn-primary" >有効化</button></div>
+            </td>
+            <td class="operation">
+              <div><button (click)="Delete(user, i)" id="enable" class="btn btn-danger" >削除</button></div>
+            </td>
+            <td class="operation">
+              <button (click)="GroupChange(user.Groups)" class="btn btn-success" >グループ変更</button>
+            </td>
+          </tr>
+        </ng-container>
+      </tbody>
+    </table>
+  </div>
+</div>

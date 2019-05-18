@@ -1,0 +1,15 @@
+.operation {
+  text-align: center;
+}
+
+.ope-button {
+  float: right;
+}
+
+table > tbody > tr > td {
+  vertical-align: middle;
+}
+
+.group-name-label {
+  float: left;
+}

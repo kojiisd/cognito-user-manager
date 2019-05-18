@@ -1,0 +1,14 @@
+<h2 mat-dialog-title>グループ変更</h2>
+<mat-dialog-content>
+	<ul style="list-style: none;">
+	<ng-container *ngFor="let group of data.allGroups; index as i;">
+		<li>
+			<mat-checkbox [checked]="data.groupArr.includes(group.GroupName)" >{{group.GroupName}}</mat-checkbox>
+		</li>
+	</ng-container>
+	</ul>
+</mat-dialog-content>
+<mat-dialog-actions>
+	<button mat-raised-button (click)="onClickOkButton()">OK</button>&nbsp;&nbsp;
+	<button mat-raised-button mat-dialog-close="cancel">キャンセル</button>
+</mat-dialog-actions>

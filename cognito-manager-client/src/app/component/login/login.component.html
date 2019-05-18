@@ -1,0 +1,18 @@
+<div class="card text-center w-50 mx-auto">
+  <div class="card-header">
+    User management site with Amazon Cognito
+  </div>
+  <div class="card-body">
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmitLogin(loginForm.value)">
+      <div class="form-group text-left">
+        <label>ID</label>
+        <input type="id" class="form-control" placeholder="Enter id" formControlName="id">
+      </div>
+      <div class="form-group text-left">
+        <label>Password</label>
+        <input type="password" class="form-control" placeholder="Password" formControlName="password">
+      </div>
+      <button type="submit" class="btn btn-primary">Login</button>
+    </form>
+  </div>
+</div>
