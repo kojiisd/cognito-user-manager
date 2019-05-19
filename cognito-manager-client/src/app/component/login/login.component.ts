@@ -1,7 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from './../../auth/auth.service';
+
+export class User {
+  constructor(public id: string, public password: string) {}
+}
 
 @Component({
   selector: 'app-login',
@@ -9,28 +13,21 @@ import { AuthService } from './../../auth/auth.service';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
-  public loginForm: FormGroup;
-
+  user = new User('', '');
+  hide = true;
+  
   constructor(
-    private formBuilder: FormBuilder,
     private router: Router,
     private auth: AuthService
   ) { }
 
   ngOnInit() {
-    this.initForm();
   }
 
-  initForm() {
-    this.loginForm = this.formBuilder.group({
-      id: ['', Validators.required],
-      password: ['', Validators.required]
-    })
-  }
 
-  onSubmitLogin(value: any) {
-    const id = value.id;
-    const password = value.password;
+  onSubmitLogin() {
+    const id = this.user.id;
+    const password = this.user.password;
 
     this.auth.signIn(id, password).subscribe(
       result => {

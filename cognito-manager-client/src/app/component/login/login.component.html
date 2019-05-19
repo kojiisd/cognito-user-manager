@@ -1,18 +1,22 @@
-<div class="card text-center w-50 mx-auto">
-  <div class="card-header">
-    User management site with Amazon Cognito
-  </div>
-  <div class="card-body">
-    <form [formGroup]="loginForm" (ngSubmit)="onSubmitLogin(loginForm.value)">
-      <div class="form-group text-left">
-        <label>ID</label>
-        <input type="id" class="form-control" placeholder="Enter id" formControlName="id">
-      </div>
-      <div class="form-group text-left">
-        <label>Password</label>
-        <input type="password" class="form-control" placeholder="Password" formControlName="password">
-      </div>
-      <button type="submit" class="btn btn-primary">Login</button>
-    </form>
-  </div>
+<div class="login-container">
+<mat-card class="login-card">
+    <mat-card-header>
+      <mat-card-title class="login-title">User management site for Amazon Cognito</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <form (ngSubmit)="onSubmitLogin()" class="login-form" #loginForm="ngForm">
+        <mat-form-field>
+          <input matInput placeholder="ID" [(ngModel)]="user.id" id="id" name="id" #id="ngModel"required>
+          <mat-error *ngIf="id.errors?.required">You must enter a ID</mat-error>
+        </mat-form-field>
+  
+        <mat-form-field>
+          <input [type]="hide ? 'password' : 'text'" matInput placeholder="Password" name="password" [(ngModel)]="user.password" id="password" #password="ngModel" required>
+          <mat-icon matSuffix (click)="hide = !hide">{{hide ? 'visibility' : 'visibility_off'}}</mat-icon>
+          <mat-error *ngIf="password.errors?.required">You must enter a password</mat-error>
+        </mat-form-field>
+        <button type="submit" mat-raised-button color="primary" [disabled]="loginForm.invalid">Login</button>
+      </form>
+    </mat-card-content>
+  </mat-card>
 </div>
