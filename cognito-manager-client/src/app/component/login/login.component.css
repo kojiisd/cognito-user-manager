@@ -1,0 +1,19 @@
+.login-container {
+  display: inline-block;
+  text-align: center;
+}
+
+.login-card {
+  max-width: 800px;
+}
+
+.login-form {
+  display: flex;
+  flex-direction: column;
+  margin-top: 15px;
+}
+
+.login-title {
+  font-weight: bold;
+  font-size: 22px;
+}

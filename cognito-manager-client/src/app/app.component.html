@@ -1,29 +1,16 @@
-<nav class="navbar navbar-expand-sm navbar-light bg-light mb-5">
-  <a class="navbar-brand" [routerLink]="['/']">Home</a>
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText"
-    aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
-  </button>
-  <div class="collapse navbar-collapse" id="navbarText">
-    <ul class="navbar-nav mr-auto">
-      <li class="nav-item" *ngIf="!(auth.loggedIn | async)">
-        <a class="nav-link" [routerLink]="['/login']">Login
-        </a>
-      </li>
-      <li class="nav-item" *ngIf="(auth.loggedIn | async)">
-        <a class="nav-link" style="cursor: pointer" (click)="onClickLogout()">Logout</a>
-      </li>
-      <li class="nav-item" *ngIf="(auth.loggedIn | async)">
-        <a class="nav-link" [routerLink]="['/signup']">Register</a>
-      </li>
-    </ul>
-    <span class="navbar-text">
-      {{username}}
-    </span>
+<mat-toolbar color="primary">
+  <mat-toolbar-row>
+    <a [routerLink]="['/']"><span>Home</span></a>
+    <a *ngIf="!(auth.loggedIn | async)" [routerLink]="['/login']"><span>Login</span></a>
+    <a *ngIf="(auth.loggedIn | async)" style="cursor: pointer; text-decoration: underline" (click)="onClickLogout()"><span>Logout</span></a>
+    <a *ngIf="(auth.loggedIn | async)" [routerLink]="['/signup']"><span>Register</span></a>
+    <span class="toolbar-spacer"></span>
+    <span>{{username}}</span>
+  </mat-toolbar-row>
+</mat-toolbar>
+   
+   
+  <div class="container">
+    <router-outlet></router-outlet>
   </div>
-</nav>
- 
- 
-<div class="container">
-  <router-outlet></router-outlet>
-</div>
+  

@@ -1,0 +1,8 @@
+mat-toolbar-row>a {
+  color: white;
+  padding: 0px 14px;
+}
+
+.toolbar-spacer {
+  flex: 1 1 auto;
+}
