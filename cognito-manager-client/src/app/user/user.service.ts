@@ -13,7 +13,7 @@ import { User, Group } from 'src/app/component/user/user';
 
 export class UserService {
   private listUrl = environment.apiBaseUrl + '/api/list_users'
-  private listInGroupUrl = environment.apiBaseUrl + '/list_users_in_group'
+  private listInGroupUrl = environment.apiBaseUrl + '/api/list_users_in_group'
   private approveUrl = environment.apiBaseUrl + '/api/approve_user'
   private enableUrl = environment.apiBaseUrl + '/api/enable_user'
   private disableUrl = environment.apiBaseUrl + '/api/disable_user'
