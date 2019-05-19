@@ -3,7 +3,9 @@ service: cognito-user-manager-server
 provider:
   name: aws
   runtime: python3.7
-  region: us-east-1
+  region: ${opt:region, self:custom.defaultRegion}
+  profile: ${opt:profile, self:custom.defaultProfile}
+  stage: ${opt:stage, self:custom.defaultStage}
   iamRoleStatements:
     - Effect: "Allow"
       Action:
@@ -21,6 +23,10 @@ provider:
   
   environment:
         UserPoolId: USER_POOL_ID
+custom:
+  defaultStage: dev
+  defaultProfile: default
+  defaultRegion: us-east-1
 
 # plugins:
 #   - serverless-plugin-tracing
