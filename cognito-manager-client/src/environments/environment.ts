@@ -2,15 +2,14 @@ export const environment = {
   production: false,
   amplify: {
     Auth: {
-      region: 'us-east-1',
-      userPoolId: 'us-east-1_InjFgmS9z',
-      userPoolWebClientId: '498su8mcidle5ugl669m0f0n37',
-      identityPoolId: 'us-east-1:efb7168b-5475-40a9-9cea-dcd56cd7a366'
+      region: 'REGION',
+      userPoolId: 'USER_POOL_ID',
+      userPoolWebClientId: 'USER_POOL_WEB_CLIENT_ID',
+      identityPoolId: 'IDENTITY_POOL_ID'
     }
   },
 
-  apiBaseUrl: 'https://rqfaw56eq8.execute-api.us-east-1.amazonaws.com/dev',
+  apiBaseUrl: 'API_BASE_URL',
 
-  localstorageBaseKey: 'CognitoIdentityServiceProvider.498su8mcidle5ugl669m0f0n37'
+  localstorageBaseKey: 'LOCAL_STORAGE_BASE_KEY'
 };
-
