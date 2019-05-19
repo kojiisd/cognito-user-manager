@@ -1,4 +1,4 @@
-service: cognito-user-manager-server
+service: cognito-user-manager-server-${opt:region, self:custom.defaultRegion}
 
 provider:
   name: aws
