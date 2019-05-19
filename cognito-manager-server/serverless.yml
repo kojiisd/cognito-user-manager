@@ -22,10 +22,10 @@ provider:
   environment:
         UserPoolId: USER_POOL_ID
 
-plugins:
-  - serverless-plugin-tracing
-  - serverless-prune-plugin
-  - serverless-plugin-split-stacks
+# plugins:
+#   - serverless-plugin-tracing
+#   - serverless-prune-plugin
+#   - serverless-plugin-split-stacks
 
 
 
