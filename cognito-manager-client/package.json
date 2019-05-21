@@ -7,7 +7,7 @@
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",
-    "e2e": "ng e2e"
+    "e2e": "cd e2e_karate/manager; mvn clean test"
   },
   "private": true,
   "dependencies": {
@@ -27,6 +27,7 @@
     "aws-amplify-angular": "^3.0.3",
     "aws-sdk": "^2.458.0",
     "core-js": "^2.5.4",
+    "forever": "^1.0.0",
     "rxjs": "~6.3.3",
     "tslib": "^1.9.0",
     "webpack": "^4.31.0",
