@@ -1,0 +1,59 @@
+version: 0.1
+frontend:
+  phases:
+    preBuild:
+      commands:
+        - mkdir  -p ~/.aws
+        - echo "[${SLS_AWS_ACCOUNT_ID}]" > ~/.aws/credentials
+        - echo "aws_access_key_id = ${ACCESS_KEY}" >>  ~/.aws/credentials
+        - echo "aws_secret_access_key = ${SECRET_KEY}" >>  ~/.aws/credentials
+        - npm install -g serverless
+        - cd cognito-manager-server/
+        - sed -i -e "s@COGNITO_IDP_ARN@${COGNITO_IDP_ARN}@g" serverless.yml
+        - sed -i -e "s@USER_POOL_ID@${USER_POOL_ID}@g" serverless.yml
+        - yum update python34 -y
+        - yum -y install python34
+        - python3 --version
+        - curl https://bootstrap.pypa.io/get-pip.py | python3
+        - pip3 -V
+        - pip3 install -r requirements_test.txt -t libs
+        - if [ -d reports ]; then rm -rf reports; fi
+        - python3 tests/test_user_handler.py
+        - ls reports/html_report/ > file_path.txt
+        - aws s3 cp reports/html_report/`cat file_path.txt` s3://${REPORT_BUCKET}/index.html --profile=${SLS_AWS_ACCOUNT_ID}
+        - npm install
+        - sls deploy --profile ${SLS_AWS_ACCOUNT_ID}
+        - cd ../
+        - cd cognito-manager-client/
+        - npm install -g forever
+        - forever start node_modules/@angular/cli/bin/ng serve
+        - yum install -y java-1.8.0-openjdk-devel.x86_64
+        - java -version
+        - yum install -y apache-maven
+        - mvn --version
+        - cd e2e_karate/manager
+        - mvn clean test
+        - ls target/
+        - cd target/surefire-reports/
+        - aws s3 cp ./ s3://${REPORT_BUCKET}/karate/ --recursive --profile=${SLS_AWS_ACCOUNT_ID}
+        - aws s3 cp ../karate.log s3://${REPORT_BUCKET}/karate/karate.log --profile=${SLS_AWS_ACCOUNT_ID}
+        - cd ../../../../
+        - pwd
+        - ls
+        - sed -i -e "s/REGION/${REGION}/g" src/environments/environment.ts
+        - sed -i -e "s/USER_POOL_ID/${USER_POOL_ID}/g" src/environments/environment.ts
+        - sed -i -e "s/USER_POOL_WEB_CLIENT_ID/${USER_POOL_WEB_CLIENT_ID}/g" src/environments/environment.ts
+        - sed -i -e "s/IDENTITY_POOL_ID/${IDENTITY_POOL_ID}/g" src/environments/environment.ts
+        - sed -i -e "s#API_BASE_URL#${API_BASE_URL}#g" src/environments/environment.ts
+        - sed -i -e "s/LOCAL_STORAGE_BASE_KEY/${LOCAL_STORAGE_BASE_KEY}/g" src/environments/environment.ts
+#        - npm ci
+    build:
+      commands:
+        - npm run build
+  artifacts:
+    baseDirectory: cognito-manager-client/dist/cognito-manager-client
+    files:
+      - '**/*'
+  cache:
+    paths:
+      - cognito-manager-client/node_modules/**/*
