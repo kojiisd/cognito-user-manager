@@ -19,6 +19,7 @@ export class UserComponent implements OnInit {
   groups: Group[];
   group: string;
   group_result: string;
+  displayedColumns = ['No', 'ID', 'Email', 'Enable', 'Status', 'Group', 'CreatedDate', 'UpdatedDate', 'Operation'];
 
   constructor(
     private userService: UserService,

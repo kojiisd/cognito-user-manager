@@ -14,57 +14,68 @@
     <button fxFlex mat-raised-button color="primary" (click)="User()">Get Cognito User Info</button>
   </div>
 
-  <div class="main" *ngIf="users">
-    <h2 class="list-title">User Information</h2>
+  <h2 class="list-title">User Information</h2>
+  <div class="mat-elevation-z8 list-table">
 
-    <div class="table-responsive">
-      <table class="table table-sm table-bordered table-hover" border="1" cellspacing="0">
-        <thead>
-          <tr>
-            <th>#</th>
-            <th>ID</th>
-            <th>Email</th>
-            <th>Enable</th>
-            <th>Group</th>
-            <th>Confirm Status</th>
-            <th>Create Date(UTC)</th>
-            <th>Update Date(UTC)</th>
-            <th colspan="4">Operation</th>
-          </tr>
-        </thead>
-        <tbody>
-          <ng-container *ngFor="let user of users; index as i;">
-            <tr>
-              <td>{{i+1}}</td>
-              <td>{{user.Username}}</td>
-              <td>{{user.Attributes[2].Value}}</td>
-              <td>{{user.Enabled}}</td>
-              <td>{{user.GroupName}}</td>
-              <td>{{user.UserStatus}}</td>
-              <td>{{user.UserCreateDate | date:"yyyy/MM/dd HH:mm:ss" }}</td>
-              <td>{{user.UserLastModifiedDate | date:"yyyy/MM/dd HH:mm:ss" }}</td>
-              <td class="operation">
-                <div *ngIf="user.UserStatus === 'UNCONFIRMED'"><button (click)="Approve(user)" id="approve"
-                    class="btn btn-primary">承認</button></div>
-                <div *ngIf="user.UserStatus === 'CONFIRMED'"><button id="approve-disable" class="btn btn-primary"
-                    disabled>承認</button></div>
-              </td>
-              <td class="operation">
-                <div *ngIf="user.Enabled == true"><button (click)="Disable(user)" id="disabled"
-                    class="btn btn-secondary">無効化</button></div>
-                <div *ngIf="user.Enabled == false"><button (click)="Enable(user)" id="enable"
-                    class="btn btn-primary">有効化</button></div>
-              </td>
-              <td class="operation">
-                <div><button (click)="Delete(user, i)" id="enable" class="btn btn-danger">削除</button></div>
-              </td>
-              <td class="operation">
-                <button (click)="GroupChange(user.Groups)" class="btn btn-success">グループ変更</button>
-              </td>
-            </tr>
-          </ng-container>
-        </tbody>
-      </table>
-    </div>
+      <mat-table #table [dataSource]="users">
+      <ng-container matColumnDef="No">
+        <mat-header-cell *matHeaderCellDef [ngClass]="'veryShortCell'">No</mat-header-cell>
+        <mat-cell *matCellDef="let user;let i = index" [ngClass]="'veryShortCell'" > {{i + 1}}</mat-cell>
+      </ng-container>
+    
+      <ng-container matColumnDef="ID">
+        <mat-header-cell *matHeaderCellDef>ID</mat-header-cell>
+        <mat-cell *matCellDef="let user"> {{user.Username}}</mat-cell>
+      </ng-container>
+    
+      <ng-container matColumnDef="Email">
+        <mat-header-cell *matHeaderCellDef>Email</mat-header-cell>
+        <mat-cell *matCellDef="let user"> {{user.Attributes[2].Value}}</mat-cell>
+      </ng-container>
+    
+      <ng-container matColumnDef="Enable">
+        <mat-header-cell *matHeaderCellDef [ngClass]="'shortCell'">Enable</mat-header-cell>
+        <mat-cell *matCellDef="let user" [ngClass]="'shortCell'"> {{user.Attributes[1].Value}}</mat-cell>
+      </ng-container>
+    
+      <ng-container matColumnDef="Status">
+        <mat-header-cell *matHeaderCellDef [ngClass]="'middleCell'">Status</mat-header-cell>
+        <mat-cell *matCellDef="let user" [ngClass]="'middleCell'"> {{user.UserStatus}}</mat-cell>
+      </ng-container>
+    
+      <ng-container matColumnDef="Group">
+        <mat-header-cell *matHeaderCellDef [ngClass]="'shortCell'">Group</mat-header-cell>
+        <mat-cell *matCellDef="let user" [ngClass]="'shortCell'"> {{user.GroupName}}</mat-cell>
+      </ng-container>
+    
+      <ng-container matColumnDef="CreatedDate">
+        <mat-header-cell *matHeaderCellDef [ngClass]="'middleCell'">Created Date(UTC)</mat-header-cell>
+        <mat-cell *matCellDef="let user" [ngClass]="'middleCell'"> {{user.UserCreateDate | date:"yyyy/MM/dd HH:mm:ss" }}</mat-cell>
+      </ng-container>
+    
+      <ng-container matColumnDef="UpdatedDate">
+        <mat-header-cell *matHeaderCellDef [ngClass]="'middleCell'">Updated Date(UTC)</mat-header-cell>
+        <mat-cell *matCellDef="let user" [ngClass]="'middleCell'"> {{user.UserLastModifiedDate | date:"yyyy/MM/dd HH:mm:ss" }}</mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="Operation">
+        <mat-header-cell *matHeaderCellDef [ngClass]="'operationCell'">Operation</mat-header-cell>
+        <mat-cell *matCellDef="let user" [ngClass]="'operationCell'">
+          <ng-container *ngIf="user.UserStatus === 'UNCONFIRMED'"><button (click)="Approve(user)" id="approve"
+            mat-raised-button color="primary">承認</button></ng-container>
+          <ng-container *ngIf="user.UserStatus === 'CONFIRMED'"><button id="approve-disable" class="btn btn-primary"
+            mat-raised-button color="disabled" disabled>承認</button></ng-container>
+          <ng-container *ngIf="user.Enabled == true"><button (click)="Disable(user)" id="disabled"
+            mat-raised-button color="accent">無効化</button></ng-container>
+          <ng-container *ngIf="user.Enabled == false"><button (click)="Enable(user)" id="enable"
+            mat-raised-button color="primary">有効化</button></ng-container>
+      
+          <button (click)="Delete(user, i)" id="enable"  mat-raised-button color="warn">削除</button>
+          <button (click)="GroupChange(user.Groups)"  mat-raised-button color="primary">グループ変更</button>
+        </mat-cell>
+      </ng-container>
+    
+      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: displayedColumns; let i = index"></mat-row>
+    </mat-table>
   </div>
 </div>

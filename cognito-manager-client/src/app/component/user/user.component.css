@@ -13,3 +13,27 @@ table > tbody > tr > td {
 .group-name-label {
   float: left;
 }
+
+.veryShortCell {
+  flex: 0 0 2vw;
+}
+
+.shortCell {
+  flex: 0 0 5vw;
+}
+
+.middleCell {
+  flex: 0 0 10vw;
+}
+
+.list-table {
+  width: 100%;
+}
+
+.operationCell {
+  flex: 0 0 23vw;
+}
+
+.operationCell > button {
+  margin-right: 0.5vw;
+}

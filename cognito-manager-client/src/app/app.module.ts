@@ -7,7 +7,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { MatCardModule, MatCard } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MatDialogModule, MatCheckboxModule, MatFormFieldModule, MatInputModule, MatSelectModule } from '@angular/material';
+import { MatDialogModule, MatCheckboxModule, MatFormFieldModule, MatInputModule, MatSelectModule, MatTableModule } from '@angular/material';
 import { MatIconModule } from '@angular/material/icon';
 
 
@@ -40,7 +40,8 @@ import { GroupChangeComponent } from './dialog/group-change/group-change.compone
     MatInputModule,
     MatToolbarModule,
     MatInputModule,
-    MatSelectModule
+    MatSelectModule,
+    MatTableModule
   ],
   providers: [],
   bootstrap: [AppComponent],
