@@ -11,8 +11,8 @@ frontend:
         - cd cognito-manager-server/
         - sed -i -e "s@COGNITO_IDP_ARN@${COGNITO_IDP_ARN}@g" serverless.yml
         - sed -i -e "s@USER_POOL_ID@${USER_POOL_ID}@g" serverless.yml
-        - yum update python34 -y
-        - yum -y install python34
+#        - yum update python34 -y
+#        - yum -y install python34
         - python3 --version
         - curl https://bootstrap.pypa.io/get-pip.py | python3
         - pip3 -V
