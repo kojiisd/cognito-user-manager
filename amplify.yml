@@ -53,12 +53,13 @@ frontend:
 #        - npm ci
 
         - cd ../
+        - aws --version
         - yum -y install git
         - yum -y install jq
         - touch ~/.netrc
-        - echo ¥"machine github.com¥" >> ~/.netrc
-        - echo ¥"login `aws ssm get-parameters --names ${SSM_USER_KEY} --region us-east-1 | jq -r '.Parameters[].Value'`¥" >> ~/.netrc
-        - echo ¥"password `aws ssm get-parameters --names ${SSM_PASS_KEY} --with-decryption --region us-east-1 | jq -r '.Parameters[].Value'`¥" >> ~/.netrc
+        - echo """machine github.com""" >> ~/.netrc
+        - echo "login `aws ssm get-parameters --names ${SSM_USER_KEY} --region us-east-1 | jq -r '.Parameters[].Value'`" >> ~/.netrc
+        - echo "password `aws ssm get-parameters --names ${SSM_PASS_KEY} --with-decryption --region us-east-1 | jq -r '.Parameters[].Value'`" >> ~/.netrc
 
         - git clone ${GIT_URL}
         - cd ${REPO_NAME}
