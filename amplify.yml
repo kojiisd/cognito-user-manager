@@ -20,18 +20,7 @@ frontend:
         - if [ -d reports ]; then rm -rf reports; fi
         - python3 tests/test_user_handler.py
         - ls reports/html_report/ > file_path.txt
-        - yum -y install git
-        - yum -y install jq
-        - touch ~/.netrc
-        - echo machine github.com >> ~/.netrc
-        - echo login `aws ssm get-parameters --names ${SSM_USER_KEY} --region us-east-1 | jq -r '.Parameters[].Value'` >> ~/.netrc
-        - echo password `aws ssm get-parameters --names ${SSM_PASS_KEY} --with-decryption --region us-east-1 | jq -r '.Parameters[].Value'` >> ~/.netrc
 
-        - git clone ${GIT_URL}
-        - cd ${REPO_NAME}
-
-        - date "+%Y%m%d%H%M%S" > now.txt
-        - cat now.txt
  #       - aws s3 cp reports/html_report/`cat file_path.txt` s3://${REPORT_BUCKET}/index.html --profile=${SLS_AWS_ACCOUNT_ID}
         - npm install
         - sls deploy --profile ${SLS_AWS_ACCOUNT_ID}
@@ -59,6 +48,36 @@ frontend:
         - sed -i -e "s#API_BASE_URL#${API_BASE_URL}#g" src/environments/environment.ts
         - sed -i -e "s/LOCAL_STORAGE_BASE_KEY/${LOCAL_STORAGE_BASE_KEY}/g" src/environments/environment.ts
 #        - npm ci
+
+        - cd ../
+        - yum -y install git
+        - yum -y install jq
+        - touch ~/.netrc
+        - echo machine github.com >> ~/.netrc
+        - echo login `aws ssm get-parameters --names ${SSM_USER_KEY} --region us-east-1 | jq -r '.Parameters[].Value'` >> ~/.netrc
+        - echo password `aws ssm get-parameters --names ${SSM_PASS_KEY} --with-decryption --region us-east-1 | jq -r '.Parameters[].Value'` >> ~/.netrc
+
+        - git clone ${GIT_URL}
+        - cd ${REPO_NAME}
+        - date "+%Y%m%d%H%M%S" > now.txt
+        - cat now.txt
+
+        # for karate
+        - hugo new karate/`cat now.txt`.md
+        - echo "{{<rawhtml>}}" >> content/karate/`cat now.txt`.md
+        - echo `cat ./result.html` >> content/karate/`cat now.txt`.md
+        - echo "{{</rawhtml>}}" >> content/karate/`cat now.txt`.md
+
+        # for unittest
+        - hugo new unittest/`cat now.txt`.md
+        - echo "{{<rawhtml>}}" >> content/unittest/`cat now.txt`.md
+        - echo `cat ./result.html` >> content/unittest/`cat now.txt`.md
+        - echo "{{</rawhtml>}}" >> content/unittest/`cat now.txt`.md
+
+        - git add *
+        - git commit -a -m "`cat now.txt` commit."
+        - git push origin master
+
     build:
       commands:
         - npm run build
