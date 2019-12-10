@@ -78,9 +78,10 @@ frontend:
         - echo "{{</rawhtml>}}" >> content/unittest/`cat ../now.txt`.md
 
         - git --version
-        - git remote -v
         - git config --global user.email ${GIT_EMAIL}
         - git config --global user.name ${GIT_NAME}
+        - git remote add origin git@github.com:${GIT_NAME}/hugo-test-result-management.git
+        - git remote -v
         - git add *
         - git commit -a -m "`cat ../now.txt` commit."
         - git push origin master
