@@ -78,6 +78,7 @@ frontend:
         - echo "{{</rawhtml>}}" >> content/unittest/`cat ../now.txt`.md
 
         - git --version
+        - git remote -v
         - git config --global user.email ${GIT_EMAIL}
         - git config --global user.name ${GIT_NAME}
         - git add *
