@@ -77,6 +77,8 @@ frontend:
         - echo "`cat ../result_unittest.html`" >> content/unittest/`cat now.txt`.md
         - echo "{{</rawhtml>}}" >> content/unittest/`cat now.txt`.md
 
+        - git config --global user.email ${GIT_EMAIL}
+        - git config --global user.name ${GIT_NAME}
         - git add *
         - git commit -a -m "`cat now.txt` commit."
         - git push origin master
