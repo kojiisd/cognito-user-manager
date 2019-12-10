@@ -30,7 +30,7 @@ frontend:
         - forever start node_modules/@angular/cli/bin/ng serve
         - yum install -y java-1.8.0-openjdk-devel.x86_64
         - java -version
-        - yum install -y apache-maven
+        - yum install -y maven
         - mvn --version
         - cd e2e_karate/manager
         - mvn clean test
