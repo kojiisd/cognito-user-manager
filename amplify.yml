@@ -20,6 +20,7 @@ frontend:
         - if [ -d reports ]; then rm -rf reports; fi
         - python3 tests/test_user_handler.py
         - ls reports/html_report/ > file_path.txt
+        - cp -p reports/html_report/`cat file_path.txt` ../result_unittest.html
 
  #       - aws s3 cp reports/html_report/`cat file_path.txt` s3://${REPORT_BUCKET}/index.html --profile=${SLS_AWS_ACCOUNT_ID}
         - npm install
@@ -38,6 +39,8 @@ frontend:
         - cd target/surefire-reports/
 #        - aws s3 cp ./ s3://${REPORT_BUCKET}/karate/ --recursive --profile=${SLS_AWS_ACCOUNT_ID}
 #        - aws s3 cp ../karate.log s3://${REPORT_BUCKET}/karate/karate.log --profile=${SLS_AWS_ACCOUNT_ID}
+        - ls karate/*.html > unittest_path.txt
+        - cp -p `cat unittest_path.txt` ../../../../../result_karate.html
         - cd ../../../../
         - pwd
         - ls
@@ -65,13 +68,13 @@ frontend:
         # for karate
         - hugo new karate/`cat now.txt`.md
         - echo "{{<rawhtml>}}" >> content/karate/`cat now.txt`.md
-        - echo `cat ./result.html` >> content/karate/`cat now.txt`.md
+        - echo `cat ../result_karate.html` >> content/karate/`cat now.txt`.md
         - echo "{{</rawhtml>}}" >> content/karate/`cat now.txt`.md
 
         # for unittest
         - hugo new unittest/`cat now.txt`.md
         - echo "{{<rawhtml>}}" >> content/unittest/`cat now.txt`.md
-        - echo `cat ./result.html` >> content/unittest/`cat now.txt`.md
+        - echo `cat ../result_unittest.html` >> content/unittest/`cat now.txt`.md
         - echo "{{</rawhtml>}}" >> content/unittest/`cat now.txt`.md
 
         - git add *
