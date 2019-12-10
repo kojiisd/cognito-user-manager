@@ -57,7 +57,7 @@ frontend:
         - yum -y install git
         - yum -y install jq
         - touch ~/.netrc
-        - echo """machine github.com""" >> ~/.netrc
+        - echo "machine github.com" >> ~/.netrc
         - echo "login `aws ssm get-parameters --names ${SSM_USER_KEY} --region us-east-1  --profile ${SLS_AWS_ACCOUNT_ID} | jq -r '.Parameters[].Value'`" >> ~/.netrc
         - echo "password `aws ssm get-parameters --names ${SSM_PASS_KEY} --with-decryption --region us-east-1  --profile ${SLS_AWS_ACCOUNT_ID} | jq -r '.Parameters[].Value'`" >> ~/.netrc
 
@@ -66,27 +66,31 @@ frontend:
         - date "+%Y%m%d%H%M%S" > ../now.txt
         - cat ../now.txt
 
-        # for karate
-        - hugo new karate/`cat ../now.txt`.md
-        - echo "{{<rawhtml>}}" >> content/karate/`cat ../now.txt`.md
-        - echo "`cat ../result_karate.html`" >> content/karate/`cat ../now.txt`.md
-        - echo "{{</rawhtml>}}" >> content/karate/`cat ../now.txt`.md
+        # # for karate
+        # - hugo new karate/`cat ../now.txt`.md
+        # - echo "{{<rawhtml>}}" >> content/karate/`cat ../now.txt`.md
+        # - echo "`cat ../result_karate.html`" >> content/karate/`cat ../now.txt`.md
+        # - echo "{{</rawhtml>}}" >> content/karate/`cat ../now.txt`.md
 
-        # for unittest
-        - hugo new unittest/`cat ../now.txt`.md
-        - echo "{{<rawhtml>}}" >> content/unittest/`cat ../now.txt`.md
-        - echo "`cat ../result_unittest.html`" >> content/unittest/`cat ../now.txt`.md
-        - echo "{{</rawhtml>}}" >> content/unittest/`cat ../now.txt`.md
+        # # for unittest
+        # - hugo new unittest/`cat ../now.txt`.md
+        # - echo "{{<rawhtml>}}" >> content/unittest/`cat ../now.txt`.md
+        # - echo "`cat ../result_unittest.html`" >> content/unittest/`cat ../now.txt`.md
+        # - echo "{{</rawhtml>}}" >> content/unittest/`cat ../now.txt`.md
 
-        - git --version
-        - git config --global user.email ${GIT_EMAIL}
-        - git config --global user.name ${GIT_NAME}
-        # - git remote set-url origin git@github.com:${GIT_NAME}/${REPO_NAME}.git
-        - git remote -v
-        - git add *
-        - git commit -a -m "`cat ../now.txt` commit."
-        - git push origin master
+        # - git --version
+        # - git config --global user.email ${GIT_EMAIL}
+        # - git config --global user.name ${GIT_NAME}
+        # # - git remote set-url origin git@github.com:${GIT_NAME}/${REPO_NAME}.git
+        # - git remote -v
+        # - git add *
+        # - git commit -a -m "`cat ../now.txt` commit."
+        # - git push origin master
         - cd ../
+        - sh ./prebuild.sh
+        - rm -rf ${REPO_NAME}
+        - pwd
+        - ls
 
     build:
       commands:
