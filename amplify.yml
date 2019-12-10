@@ -39,7 +39,7 @@ frontend:
         - cd target/surefire-reports/
 #        - aws s3 cp ./ s3://${REPORT_BUCKET}/karate/ --recursive --profile=${SLS_AWS_ACCOUNT_ID}
 #        - aws s3 cp ../karate.log s3://${REPORT_BUCKET}/karate/karate.log --profile=${SLS_AWS_ACCOUNT_ID}
-        - ls karate/*.html > unittest_path.txt
+        - ls *.html > unittest_path.txt
         - cp -p `cat unittest_path.txt` ../../../../../result_karate.html
         - cd ../../../../
         - pwd
