@@ -56,9 +56,9 @@ frontend:
         - yum -y install git
         - yum -y install jq
         - touch ~/.netrc
-        - echo "machine github.com" >> ~/.netrc
-        - echo "login `aws ssm get-parameters --names ${SSM_USER_KEY} --region us-east-1 | jq -r '.Parameters[].Value'`" >> ~/.netrc
-        - echo "password `aws ssm get-parameters --names ${SSM_PASS_KEY} --with-decryption --region us-east-1 | jq -r '.Parameters[].Value'`" >> ~/.netrc
+        - echo ¥"machine github.com¥" >> ~/.netrc
+        - echo ¥"login `aws ssm get-parameters --names ${SSM_USER_KEY} --region us-east-1 | jq -r '.Parameters[].Value'`¥" >> ~/.netrc
+        - echo ¥"password `aws ssm get-parameters --names ${SSM_PASS_KEY} --with-decryption --region us-east-1 | jq -r '.Parameters[].Value'`¥" >> ~/.netrc
 
         - git clone ${GIT_URL}
         - cd ${REPO_NAME}
@@ -80,7 +80,6 @@ frontend:
         - git --version
         - git config --global user.email ${GIT_EMAIL}
         - git config --global user.name ${GIT_NAME}
-        - git remote add origin git@github.com:${GIT_NAME}/hugo-test-result-management.git
         - git remote -v
         - git add *
         - git commit -a -m "`cat ../now.txt` commit."
