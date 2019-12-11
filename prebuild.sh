@@ -2,15 +2,15 @@
 
 # for karate
 hugo new karate/`cat ../now.txt`.md
-echo "{{¥<rawhtml¥>}}" >> content/karate/`cat ../now.txt`.md
+echo "{{\<rawhtml\>}}" >> content/karate/`cat ../now.txt`.md
 echo "`cat ../result_karate.html`" >> content/karate/`cat ../now.txt`.md
-echo "{{¥</rawhtml¥>}}" >> content/karate/`cat ../now.txt`.md
+echo "{{\</rawhtml\>}}" >> content/karate/`cat ../now.txt`.md
 
 # for unittest
 hugo new unittest/`cat ../now.txt`.md
-echo "{{¥<rawhtml¥>}}" >> content/unittest/`cat ../now.txt`.md
+echo "{{\<rawhtml\>}}" >> content/unittest/`cat ../now.txt`.md
 echo "`cat ../result_unittest.html`" >> content/unittest/`cat ../now.txt`.md
-echo "{{¥</rawhtml¥>}}" >> content/unittest/`cat ../now.txt`.md
+echo "{{\</rawhtml\>}}" >> content/unittest/`cat ../now.txt`.md
 
 git --version
 git config --global user.email ${GIT_EMAIL}
