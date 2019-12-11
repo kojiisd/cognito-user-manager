@@ -86,8 +86,8 @@ frontend:
         # - git add *
         # - git commit -a -m "`cat ../now.txt` commit."
         # - git push origin master
+        - sh ../prebuild.sh
         - cd ../
-        - sh ./prebuild.sh
         - rm -rf ${REPO_NAME}
         - pwd
         - ls
